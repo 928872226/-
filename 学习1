@@ -1,0 +1,5 @@
+今天首先学习了 urllib 函数。成功请求一个网址并顺利获取网址的内容。
+from urllib import request
+resp = request.urlopen('http://www.baidu.com')
+print(resp.read())
+三行代码可以获取一张网页的数据。
