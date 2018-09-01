@@ -1,0 +1,89 @@
+Cookie 翻译为“饼干、甜点”在python中主要解决http请求无状态问题
+用到 http.cookiejar 模块
+# python 示例代码
+# 导入三个模块中的三个函数，写好头部
+from urllib import request
+from urllib import parse
+from http.cookiejar import CookieJar
+headers = {
+"User-Agent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+}
+# 创建一个 opener 函数
+def get_opener()
+    cookiejar = CookieJar()
+    handler = request.HTTPCookieProcessor(cookiejar)
+    opener = request.bulid_opener(handler)
+    return opener
+# 创建一个登陆 login 函数
+def login_renrern(opener)
+data = {
+        "email":"邮箱"
+        "password":"密码"
+}
+login_url = 'http://www.renren.com/PLogin.do'
+req = request.Request(login_url,data = parse.urlencode(data).encode('utf-8'),headers = headers)
+resp = opener.open(req)
+with open('renrern.html','w',encoding = 'utf-8' as fp:
+fp.wirte(resp.read().decode('utf-8)
+# 创建一个访问 visit 函数
+def visit_profile(opener)
+dapeng_url = 'http://www.renren.com/880151247/profile'
+req = request.Request(dapeng_url,headers = headers)
+resp = opener.open(req)
+with open('renren.html','w',encoding = 'utf-8') as fp:
+fp.write(resp.read().decode('utf-8')
+# 创建一个主函数调用上述三个函数
+main
+opener = get_opener()
+login_renren(opener)
+visit_profile(opener)
+
+# 把网络中的Cookie保存到本地
+# python 示例代码
+from urllib import request
+from http.cookiejar import MozillaCookieJar
+cookiejar = MozillCookieJar('cook.txt')
+cookie.load(ignorce_disgard = True)
+handler = request.HttpCookieProcessor(cookiejar)
+opener = request.build_opener(handler)
+resp = opener.open('http://www.baidu.com')
+cookiejar.save()
+# 从下面开始学习Requests库函数 “http for human /让http服务于人类”很实用的函数库  (*@ο@*) 哇～
+import requests
+r = requests.get('htttp://www.baidu.com')  类比于 r = request.urlopen('http://baidu.com) 请求一个网页
+print(r.status_code) 查看响应代码
+print(r.headers) 查看响应头部
+print(r.encoding) 查看响应头部字符编码
+#从网页上抓取数据
+print(r.content)
+print(r.text)  
+r.content 直接从网页上抓取数据，没有经过任何解码，是一个bytes类型
+r.text 对网页数据进行解码的字符串，有时候可能会乱码，需要 r.content.decode('utf-8') 进行手动解码
+print(r.json)
+# requests 发送post请求
+r = requests.post('http://www.baidu.com',data ={ '' : '' }
+# requests 使用 Ip 代理，只需在请求方法中传递proxies参数就可以了
+python 示例代码
+import requests
+url = ' '
+headers = {''}
+# 代理服务器
+prosy = {'':'':''}  
+r = requests.get(url,headers = headers,proxies = prosy)
+# requests 利用 cookies 拿到返回的 cookie 值
+print(r.cookies)
+session 可以实现多个请求之间共享cookie
+python 示例代码
+import requests
+url = ''
+headers = {'':''}
+dara = {'',''}
+s = requests.session()
+session.post(url,data=data,headers=headers)
+r = session.get('')
+print(r.text)
+
+
+以上为昨天所学内容有点多，需要好好消化吸收。加油，每天进步一点点。
+昨天没有去跑步，但是打了两个小时的篮球。
+今天也要努力加油奥 fighting!!!!!
