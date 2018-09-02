@@ -1,0 +1,63 @@
+# 昨天学习了爬取豆瓣电影的代码
+# 导入需要的库，并定义好全局变量
+import requests
+from lxml import etree
+headers = {
+     'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
+    'Referer':'https://movie.douban.com/'
+}
+url = 'https://movie.douban.com/cinema/nowplaying/weihai/'
+# 首先进行网络请求，获得网络数据
+r = requests.get(url,headeers = headers)
+t = r.text
+# 然后对网络数据进行解析和提取
+h = etree.HTML(t)
+ul = h.xpath("//ul[@class='lists']")[0]
+lis = ul.xpath('./li')
+movies = []
+for li in lis:
+    title = li.xpath('@data-title')[0]
+    score = li.xpath('@data-score')[0]
+    duration = li.xpath('@data-duration')[0]
+    region = li.xpath('@data-region')[0]
+    director = li.xpath('@data-director')[0]
+    actors = li.xpath('@data-actors')[0]
+    tupain = li.xpath('.//img/@scr')[0]
+# 然后把数据保存到movies列表中
+movie = {
+    'title':title,
+    'score':score,
+    'duration':duration,
+    'region':region,
+    'director':director,
+    'actors':actors,
+    'tupian':tupain,
+    }
+movies.append(movie)
+print(movies)
+
+# 需要注意的知识点：
+1. /和//的区别：/代表只获取直接子节点。//获取子孙节点。
+2.contains:有时候某个属性中包含了多个值，那么可以使用'contains'函数。示例代码如下：
+python
+//div[contains(@class,'job_detail')]
+3.谓词中的坐标是从1开始的，不是从0开始的。
+#使用lxml解析HTML代码：
+1.解析html字符串：使用'lxml.etree.HTML'进行解析。示例代码如下：
+python
+htmlelement = etree.HTML(text)
+print(etree.tostring(htmlelement,encoding = 'utf-8').decoding('utf-8'))
+2.解析html文件：使用'lxml.etree.parse'进行解析。示例代码如下：
+python
+htmlelement = etree.parse('tencent.html')
+print(etree.tostring(htmlelement,encoding='utf-8').decode('utf-8'))
+这个函数默认使用的是'XML'解析器，所以如果碰到一些不规范的'HTML'代码的时候就会解析错误这时候就要自己创建'HTML'解析器。
+python
+parser = etree.HTMLParser(encoding = 'utf-8')
+htmlement = etree.parse('lagou.htmi',parser = parser)
+print(etree.tostring(htmlelement, encoding = ('utf-8')).decode('utf-8'))
+
+昨天学习了网页数据的解析与提取，实战项目电影天堂失败大哭
+昨天在操场跑了4or5圈
+加油↖(^ω^)↗每天都要进步一点点
+用饱满的热情期待新的一天吧！！！！！
