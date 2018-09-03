@@ -1,0 +1,59 @@
+# 使用requests和xpath爬取电影天堂
+import requests
+from lxml import etree
+DING_YING = 'http://www.dytt8.net'
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+    'Referer': 'http://www.dytt8.net/html/gndy/dyzz/list_23_2.html'
+}
+def spider()
+    url = 'http://www.dytt8.net/html/gndy/dyzz/list_23_1.html'
+    resp = request.get(url,headers = HEADERS)
+    text = resp.content.decode('gbk')
+    tree = etree.HTML(text)
+    all_a = tree.xpath("//div[@class = 'co_content8']//a"）
+    for a in all_a:
+        title = a.xpath("text()")[0]
+        href = a.xpath("@href")[0]
+        if href.startswith('/'):
+            detail_url = DING_YING+href
+            crawl_detail(detail_url)
+            break
+  def crawl_detail(url)
+      resp = requests.get(url,headers = HEADERS)
+      text = resp.content.decode('gbk')
+      tree = etree.HTML(text)
+      create_time = tree.xpath("//div[@class = 'co_content8']/ul/text()")[0].strip()
+      imgs = tree.xpath("//div[@id = 'Zoom']//img/@src")
+      cover = imgs[0]
+      screenshot = imgs[1]
+      infos = tree.xpath("//div[@id = 'Zoom']//text()")
+      for index,info in enumerate(infos)
+          if info.startswith("◎年　　代"):
+             year = info.replace("◎年　　代","").strip()
+          if info.startswith("◎豆瓣评分"):
+             douban_rating = info.replace("◎豆瓣评分",'').strip()
+             print(douban_rating)
+          if info.startswith("◎主　　演"):
+             actors = [info]
+             for x in range(index+1,len(infos)):
+                 actor = infos[x]
+                 if actor.startswith("◎"):
+                    break
+                 actors.append(actor.strip())
+             print(",".join(actors))
+main
+    spider()
+    
+# 以上为昨天的学习内容
+
+BeautifulSoup4库 也是HTML/XML解析器，主要功能也是如何解析和提取HTML/XML数据。
+python
+from bs4 import BeautifulSoup
+soup = BeautifulSoup(html,"lxml")
+print(soup.prettify())
+soup.find_all("a",id = 'link2')
+
+# 昨天晚上没有上晚自习，也没有去跑步，玩游戏玩到12点，有点嗨过头了^_^
+加油，以饱满的热情期待今天↖(^ω^)↗
+   
