@@ -1,0 +1,53 @@
+# 今天学习了正则表达式和re模块
+# 正则表达式：按照一定的规则，从某个字符串匹配出想要的数据，这个规则就是正则表达式。
+# 正则表达式常用匹配规则：
+
+# 匹配某个字符串（1个）
+text = 'hello'
+ret = re.match('he',text)
+print(ret.group())
+在hello中，匹配出he
+
+点.匹配任意的字符(不能匹配到换行符）：
+text = "ab"
+ret = re.match('.',text)
+print(ret.group())
+
+\d匹配任意的数字
+text = "123"
+ret = re.match('\d',text)
+print(ret.group())
+
+
+\D匹配任意的非数字
+text = "abasd"
+ret = re.match('\D',text）
+print(ret.group())
+
+\s匹配的是空白字符串（包括：/n,/t,/r,空格）
+text = "\t"
+ret = re.match('\s',text)
+print(ret.group())
+
+\w匹配的是a-zA-Z以及数字和下划线
+text = "_"
+ret = re.match('\w',text)
+print(ret.group())
+
+\W匹配的是和\w相反的
+text = '+'
+ret = re.match('\W',text)
+print(ret.group())
+
+[]组合的方式，只要满足中括号中的某一项都算匹配成功
+text = "0731-919399139919"
+ret = re.match('[\d\-]+',text)
+print(ret.group())
+
+# 匹配多个字符
+*：可以匹配0或者任意多个字符
+text = "0731"
+ret = re.match('\d*',text)
+print(ret.group())
+
+
