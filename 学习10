@@ -1,0 +1,113 @@
+# 多线程爬虫
+# 多线程是同步完成多项任务
+# threading模块介绍：threading模块是专门用来做多线程编程的模块，最常用的类是Thread,即：threading.Thread
+import threading
+import time
+def coding():
+    for x in range(3):
+       print('%s正在写代码' % x)
+       time.sleep(1)
+def drawing():
+    for x in range(3):
+        print('%s正在画画' % x)
+        time.sleep(1)
+def main():
+    t1 = threading.Thread(target=coding)
+    t2 = threading.Thread(target=drawing)
+    t1.start()
+    t2.start()
+main
+    main(）
+# 以上是创建了两个线程
+
+# 多线程共享全局变量问题：线程执行的顺序是无序的，可能会造成数据错误
+import threading
+tickets = 0
+def get_ticket():
+    global tickets
+    for x in range(1000000):
+        tickets += 1
+    print('tickets:%d' % tickets)
+def mian():
+    for x in range(2):
+        t = threading.Thread(target=get_ticket)
+        t.start()
+main
+    main()
+# 以上正常结果是2000000，因为多线程运行的不确定性，因此最后的结果可能是随机的
+
+# 锁机制：为了解决共享全局变量的问题，threading提供了一个Lock类，这个类可以在某个线程访问某个变量的时候加锁，其他线程此时就进不来，当前线程处理完后其他线程
+# 才能进来处理
+import threading
+VALUE = 0
+gLock = threading.Lock()
+def add_value():
+    global VALUE
+    gLock.acquire()
+    for x in range(1000000):
+        VALUE += 1
+    gLock.release()
+    print('value:%d' % VALUE)
+def main():
+    for x in range(2):
+        t = threading.Thread(target=add_value)
+        t.start()
+main
+    main()
+# 一个线程一个线程的进行
+
+# Lock版本生产者和消费者模式：
+# 生产者的线程专门来生产数据，然后存放到中间变量中，消费者再从中间变量中取出数据进行消费
+import threading
+import random
+import time 
+gMoney = 1000
+gLock = threading.Lock()
+gTimes = 0
+class Producter(threading.Thread):
+    def run
+        global gMoney
+        global gLock
+        globle gTimes
+        while True:
+            money = random.randint(100,1000)
+            gLock.acqurie()
+            if gTimes >= 10:
+                gLock.release()
+                break
+            gMoney += money
+            print('%s当前存入%d元钱，剩余%d元钱',% (threading.current_thread(),money,gMoney))
+            gTimes += 1
+            time.sleep(0.5)
+            gLock.release()
+class Consumer(threading.Thread):
+    def run
+        global gMoney
+        global gLock
+        global gTimes
+        while True:
+            money = random.randint(100,500)
+            gLock.acquire()
+            if gMoney > money:
+                gMoney -= money
+                print('%s当前取出%d元钱，剩余%d元钱' % (threading.current_thread(),money,gMoney))
+                time.sleep(0.5)
+            else:
+                if gTimes >= 10:
+                    gLock.release()
+                    break
+                print('%s当前想取%d元钱，剩余%s元钱，不足！！！' % (threading.current_thread(),money,gMoney))
+            gLock.release()
+def main():
+    for x in range(5):
+        Consumer(name = '消费者线程%d' % x).start()
+    for x in Producter(name = '生产者线程%d' % x).start()
+main
+   main()
+   
+# Queue线程安全队列：python中使用队列queue来实现线程间的同步
+# 1.Queue:创建一个先进先出的队列2.qsize:返回队列的大小3.empty：判断队列是否为空4.full：判断队列是否满了5.get：从队列中取最后一个数据6.put：将一个数据放在队列中
+
+# 昨天去跑步了，加油！！！
+# 斯人若彩虹，遇上方知有^_^
+            
